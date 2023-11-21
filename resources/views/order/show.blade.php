@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Bkash Payment Gateway</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -29,6 +30,7 @@
             
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
   <!-- Bootstrap JavaScript Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
@@ -37,6 +39,34 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+
+  <script id = "myScript" src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
+
+
+  <script>
+        $(document).ready(function(){
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+        
+        $.ajax({
+            url: "{{ route('token') }}",
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('got data from token  ..');
+				console.log(JSON.stringify(data));
+				
+                accessToken=JSON.stringify(data);
+            },
+			error: function(){
+				console.log('error');
+            }
+        });
+    });
   </script>
 </body>
 
