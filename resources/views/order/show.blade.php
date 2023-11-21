@@ -19,8 +19,8 @@
     <div class="card" style="width: 200px; padding: 15px 15px; margin: 15px 15px; text-align: center;">
         <div class="card-body">
             <h4 class="card-title">{{ $order->product_name }}</h4>
-            <p class="card-text amount">Amount: {{ $order->amount }}</p>
-            <p class="card-text invoice">Invoice: {{ $order->invoice }}</p>
+            <p class="card-text amount">{{ $order->amount }}</p>
+            <p class="card-text invoice">{{ $order->invoice }}</p>
             <p class="card-text">Status: {{ $order->status }}</p>
             @if ($order->status == 'Pending')
             <button type="submit" id="bKash_button" class="btn btn-sm btn-danger">Pay with Bkash</button>
