@@ -11,3 +11,5 @@ Route::get('/', function () {
 Route::get('/orders',[OrderController::class,'index'])->name('order.index');
 Route::get('/show/{order}',[OrderController::class,'show'])->name('order.show');
 Route::post('token',[PaymentController::class,'token'])->name('token');
+Route::get('createpayment',[PaymentController::class,'createpayment'])->name('createpayment');
+Route::get('executepayment',[PaymentController::class,'executepayment'])->name('executepayment');
