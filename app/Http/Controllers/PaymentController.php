@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -106,7 +107,7 @@ class PaymentController extends Controller
         // $array = json_decode($strJsonFileContents, true);
 
         $array = $this->_get_config_file();
-        
+
         $paymentID = $_GET['paymentID'];
         $proxy = $array["proxy"];
 
@@ -126,6 +127,20 @@ class PaymentController extends Controller
 
         $resultdatax=curl_exec($url);
         curl_close($url);
+
+        $this->_updateOrderStatus($resultdatax);
         echo $resultdatax;
+    }
+
+    protected function _updateOrderStatus($resultdatax)
+    {
+        $resultdatax = json_decode($resultdatax);
+
+        if ($resultdatax && $resultdatax->paymentID != null && $resultdatax->transactionStatus == 'Completed') {
+            Order::where('invoice', $resultdatax->merchantInvoiceNumber)->update([
+                'status' => 'Paid',
+                'trxID' => $resultdatax->trxID
+            ]);
+        }
     }
 }

@@ -127,7 +127,7 @@
                         data = JSON.parse(data);
                         if(data && data.paymentID != null){
                             alert('[SUCCESS] data : ' + JSON.stringify(data));
-                            window.location.href = "success.html";                              
+                            window.location.href = "{{ route('order.index') }}";                              
                         }
                         else {
                             bKash.execute().onError();
